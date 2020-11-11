@@ -24,7 +24,7 @@
   },
   "test": {
     "username": "postgres",
-    "password": "Tdadon96",
+    "password": "password",
     "database": "db name_test",
     "host": "127.0.0.1",
     "dialect": "postgres"

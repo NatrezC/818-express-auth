@@ -18,22 +18,20 @@ router.post('/signup', (req, res)=>{
     .then(([createdUser, wasCreated])=>{
         if(wasCreated){
             console.log(`just created the following user:`, createdUser)
+            // log the new user in
             passport.authenticate('local', {
                 successRedirect: '/',
-                successFlash: 'Account created and logged in!' //-->FLASH
-            })(req, res) //IIFE = immidate invoked function
+                successFlash: 'Account created and logged in!'  // !-> FLASH <-!
+            })(req, res) // IIFE = immediately invoked function
         } else {
-            req.flash('error', 'email already exists, try logggin in')
+            req.flash('error', 'email already exists, try logging in')  // !-> FLASH <-!
             res.redirect('/auth/login') // redirect to login page
-            console.log(' An account associated with that email address already exists! Try loggin in.')
+            // console.log('An account associated with that email address already exists! Try loggin in.')
         }
-        // redirect to login page
-        //res.redirect('/auth/login')
     })
     .catch(err=>{
-        req.flash('error', err.message)
-        res.redirect('/auth/signup')
-        console.log('Did not post to db!!! See error>>>>>>>>', err)
+        req.flash('error', err.message)  // !-> FLASH <-!
+        res.redirect('/auth/signup') // redirect to signup page so they can try again
     })
 })
 
@@ -44,13 +42,13 @@ router.get('/login', (req, res)=>{
 router.post('/login', passport.authenticate('local', {
     failureRedirect: '/auth/login',
     successRedirect: '/',
-    failureFlash: 'Invalid email or password!', //---->FLASH
-    successFlash: 'You are now logged in!' //--->FLASH
+    failureFlash: 'Invalid email or password!', // !-> FLASH <-!
+    successFlash: 'You are now logged in!' // !-> FLASH <-!
 }))
 
 router.get('/logout', (req, res)=>{
     req.logout()
-    req.flash('Successfully logged out!') //-->FLASH
+    req.flash('Successfully logged out!') // !-> FLASH <-!
     res.redirect('/')
 })
 
